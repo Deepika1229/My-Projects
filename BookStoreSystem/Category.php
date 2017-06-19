@@ -21,9 +21,7 @@
           <li><a href='Category.php?value=2'>Sci-Technology</a></li>
           <li><a href='Category.php?value=3'>Business</a></li>
         </ul>
-      </li>
-      
-      
+      </li>     
     </ul>
 	<ul class="nav navbar-nav navbar-right">
       <li><a href="BookStoreSystem.php" ><span class="glyphicon glyphicon-log-out"></span>Log out</a></li>
@@ -36,11 +34,10 @@
 </html>
 
 <?php
-//session_start();
+
 $con = mysqli_connect("localhost","root","") or die("Unable to connect");
 mysqli_select_db($con,"mydb");
 $var=$_GET['value'];
-//echo "The value is".$var ;
 switch($var)
 {
 case 1:
@@ -55,8 +52,6 @@ case 3:
 }
 
 $query_run = mysqli_query($con,$sql);
-//$record=mysql_fetch_assoc($query_run);
-//echo $record;
 
 ?>
 <html>
@@ -77,18 +72,13 @@ while($record=mysqli_fetch_array($query_run))
 	echo "<tr>";
 	echo "<td>".$record['bookname']."</td>";
 	echo "<td>".$record['author']."</td>";
-	//echo "<td>".$record['category']."</td>";
-	//echo "<td>".$record['description']."</td>";
 	echo "<td>".$record['price']."</td>";
 	echo "<td>";
-	
 	echo '<a href="'. $fileStorage . $record['fileToUpload'] . '">'. htmlentities($record['bookname'], ENT_COMPAT, 'UTF-8') .'</a><br />';
 	//echo "<img src='uploads/".$record['fileToUpload']."' >";
 	echo "</td>";
 	echo "</tr>";
  }
- 
-
 ?>
 </table>
 </div>

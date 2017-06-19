@@ -1,7 +1,7 @@
 <?php
-//session_start();
+// Connecting to database
 	$con = mysqli_connect("localhost","root","") or die("Unable to connect");
-mysqli_select_db($con,"mydb");
+	mysqli_select_db($con,"mydb");
 ?>
 <html>
 <head>
@@ -50,21 +50,20 @@ mysqli_select_db($con,"mydb");
 <input type="submit" name="submit_btn" value="SUBMIT">
 	<input type="reset" name="clear" value="CLEAR">
 <h6>NOTE: After 'Sign Up' please go to 'Login' page then you will be directed to 'Book Store'</h6>
-
-
 </form>
 </div>
+
 <?php
-if(isset($_POST['submit_btn']))
+if(isset($_POST['submit_btn']))		//Check if submit button is clicked or not
 {
 $username = $_POST['username'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 $cpassword = $_POST['cpassword'];
-if($password == $cpassword)
+if($password == $cpassword)		//Checking the password and confirm password
 {
 $query = "select * from Registration WHERE username='$username'";
-$query_run = mysqli_query($con,$query);
+$query_run = mysqli_query($con,$query);		//executing query
  
 	if((mysqli_num_rows($query_run))>0)
 	{
@@ -77,7 +76,7 @@ $query_run = mysqli_query($con,$query);
 		if($query_run1)
 		{
 		echo '<script type="text/javascript"> alert("Registered") </script>';
-		header('location:Login.php');
+		header('location:Login.php');		//After registration the page will be redirected to Login page
 		}
 		else
 		{
@@ -87,7 +86,7 @@ $query_run = mysqli_query($con,$query);
 }
 else
 {
-	echo '<script type="text/javascript"> alert("password not matched") </script>';
+	echo '<script type="text/javascript"> alert("password and confirm password not matched") </script>';
 }
 }
 ?>

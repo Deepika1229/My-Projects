@@ -1,7 +1,8 @@
 <?php
 	session_start();
+	//connecting to database
 	$con = mysqli_connect("localhost","root","") or die("Unable to connect");
-mysqli_select_db($con,"mydb");
+	mysqli_select_db($con,"mydb");
 ?>
 <html>
 <head>
@@ -45,13 +46,12 @@ img{
 </form>
 <h3> Welcome
 <?php 
-	echo $_SESSION['username'];
+	echo $_SESSION['username'];		//displays the username of person who ever login into the website
 	
 
-	if(isset($_POST['logout']))
+	if(isset($_POST['logout']))		//checking the log out button clicked or not
 	{
 		session_unset();
-		//echo "inside session";
 		session_destroy();
 		echo '<script type="text/javascript"> alert("At session destroy") </script>';
 		header('location:BookStoreSystem.php');
@@ -84,12 +84,8 @@ while($record=mysqli_fetch_array($query_run))
 	echo "<tr>";
 	echo "<td>".$record['bookname']."</td>";
 	echo "<td>".$record['author']."</td>";
-	//echo "<td>".$record['category']."</td>";
-	//echo "<img src='/uploads" . $record['fileToUpload']."'>";
-	//echo "<td>".$record['description']."</td>";
 	echo "<td>".$record['price']."</td>";
 	echo "<td>";
-	
 	echo '<a href="'. $fileStorage . $record['fileToUpload'] . '">'. htmlentities($record['bookname'], ENT_COMPAT, 'UTF-8') .'</a><br />';
 	//echo "<img src='uploads/".$record['fileToUpload']."' >";
 	echo "</td>";

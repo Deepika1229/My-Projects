@@ -1,5 +1,7 @@
 <?php
-session_start();
+	
+	session_start();	//To start the session
+	// Connecting to database
 	$con = mysqli_connect("localhost","root","") or die("Unable to connect");
 	mysqli_select_db($con,"mydb");
 ?>
@@ -45,26 +47,25 @@ session_start();
 </form>
 </div>
 <?php
-	if(isset($_POST['login']))
+	if(isset($_POST['login']))		//Checking the 'Login' buttion is clicked or not
 	{
 		$username=$_POST['username'];
 		$password=$_POST['password'];
-		//echo $username;
-		//echo $password;
-		if($username=='admin' && $password=='password')
+		
+		//Validates the admin credentials
+		if($username=='admin' && $password=='password')		
 		{
-			header('location:OpenStoreAdmin.php');
+			header('location:OpenStoreAdmin.php');		//The page will be redirected to OpenStoreAdmin.php
 		}
 		
 		else{
+			//selecting the records of matched username and password entered by the user
 			$query = "select * from Registration where username='$username' and password='$password'";
 			$query_run = mysqli_query($con,$query);
 			if(mysqli_num_rows($query_run)>0)
 			{
 			//valid
-			echo "Valid User";
-			$_SESSION['username']=$username;
-			//print_r($_SESSION);
+			$_SESSION['username']=$username; 	//stores the username in session
 			echo '<script type="text/javascript"> alert("Valid") </script>';
 			header('location:OpenStore.php');
 			}

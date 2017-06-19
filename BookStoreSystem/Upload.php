@@ -1,5 +1,5 @@
 <?php
-	//session_start();
+	//connecting to database
 	$con = mysqli_connect("localhost","root","") or die("Unable to connect");
 	mysqli_select_db($con,"mydb");
 ?>
@@ -82,7 +82,6 @@
 </form>
 
 <?php 
-	//echo $_SESSION['username'];
 
 $msg = "";
 if(isset($_POST['upload']))
@@ -93,49 +92,46 @@ $category = $_POST['category'];
 $description=$_POST['description'];
 $price=$_POST['price'];
 
-$target = "uploads/" . basename($_FILES['fileToUpload']['name']);
+$target = "uploads/" . basename($_FILES['fileToUpload']['name']);	//directory where the file is going to placed
 $fileToUpload=$_FILES['fileToUpload']['name'];
 
+//selecting the records to check for any duplication in books
 $query = "select * from Upload WHERE bookname='$bookname' AND author='$author'";
 $query_run = mysqli_query($con,$query);
  
 	if((mysqli_num_rows($query_run))>0)
 	{
+		//Book already existed
 	echo '<script type="text/javascript"> alert("Book already exist") </script>';
 	}
 	else
 	{
+		//Book is not in the database i.e., it can insert into databse
 	$query = "insert into Upload (bookname,author,category,fileToUpload,description,price) values('$bookname','$author','$category','$fileToUpload','$description','$price')";
 	$query_run1 = mysqli_query($con,$query);
 		if($query_run1)
 		{
-			//echo '<script type="text/javascript"> alert("HIII") </script>';
 			echo '<script type="text/javascript"> alert("Uploaded Successfully") </script>';
-			//header('location:Upload.php');
 		}
 		else
 		{
-			echo '<script type="text/javascript"> alert("Error") 	</script>';
+			echo '<script type="text/javascript"> alert("Error in Uploading") 	</script>';
 		}
-		if(move_uploaded_file($_FILES['fileToUpload']['tmp_name'],$target)){
-			
-			echo '<script type="text/javascript"> alert("HIII") </script>';
+		//check whether the file is stored in the destination folder or not
+		if(move_uploaded_file($_FILES['fileToUpload']['tmp_name'],$target)) 
+		{		
 			$msg = "Image uploaded successfully";
-			
 		}
-		else{
-			echo '<script type="text/javascript"> alert("problem") </script>';
+		else
+		{
 			$msg = "There was a problem in uploading image";
 		}
 	}
 }
 
-
-
 if(isset($_POST['logout']))
 	{
 		session_unset();
-		//echo "inside session";
 		session_destroy();
 		echo '<script type="text/javascript"> alert("At session destroy") </script>';
 		header('location:BookStoreSystem.php');

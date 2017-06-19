@@ -1,7 +1,8 @@
 <?php
-	//session_start();
+	session_start();
+	//connecting to database
 	$con = mysqli_connect("localhost","root","") or die("Unable to connect");
-mysqli_select_db($con,"mydb");
+	mysqli_select_db($con,"mydb");
 ?>
 <html>
 <head>
@@ -38,12 +39,9 @@ mysqli_select_db($con,"mydb");
 </form>
 <h3> Welcome
 <?php 
-	//echo $_SESSION['username'];
-
 	if(isset($_POST['logout']))
 	{
 		session_unset();
-		//echo "inside session";
 		session_destroy();
 		echo '<script type="text/javascript"> alert("At session destroy") </script>';
 		header('location:BookStoreSystem.php');
